@@ -16,7 +16,8 @@ try{
 				array_shift($ar);
 				$apiCall = implode('/',$ar);
 				if(stripos($apiCall, '/') === 0)$apiCall = substr($apiCall, 1);
-				$handler = GPSAPIHandleRequest::createHandler($apiCall, $requestMethod, $qsParams);
+				$payload = file_get_contents('php://input'); //this is expected to be JSON
+				$handler = GPSAPIHandleRequest::createHandler($apiCall, $requestMethod, $qsParams, $payload);
 				$handler->handle();
 			} catch (Exception $e){
 				GPSAPIHandleRequest::exception($e);
