@@ -32,5 +32,16 @@ class GPSPosition extends \chetch\db\DBObject{
 		$latest = count($rows) ? $rows[0] : null;
 		return $latest;
 	}
+
+	static public function getPosition($date = null){
+		if(empty($date)){
+			return static::getLatestPosition();
+		}
+
+		$sort = "ABS(TIMESTAMPDIFF(SECOND,timestamp,'$date'))";
+		$rows = self::createCollection(null, null, $sort, "0,1");
+		$latest = count($rows) ? $rows[0] : null;
+		return $latest;
+	}
 }
 ?>

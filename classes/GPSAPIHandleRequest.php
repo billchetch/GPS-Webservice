@@ -1,6 +1,7 @@
 <?php
 
 use chetch\api\APIException as APIException;
+use chetch\sys\SysInfo as SysInfo;
 
 class GPSAPIHandleRequest extends chetch\api\APIHandleRequest{
 	
@@ -12,18 +13,27 @@ class GPSAPIHandleRequest extends chetch\api\APIHandleRequest{
 				break;
 				
 			case 'status':
+				//$data = SysInfo::getInfo('gps_device_status');
+				$si = SysInfo::createInstance();
+				$data = $si->getData('gps_device_status');
+				break;
+
+			case 'position':
+				if(empty($params['date']))throw new Exception("Please supply a date value");
+				$pos = GPSPosition::getPosition($params['date']);
+				$data = $pos->getRowData();
 				break;
 
 			case 'latest-position':
+				$si = SysInfo::createInstance();
+				$data = $si->getData('gps_device_status');
+				if($data['status'] != "recording")throw new Exception("Cannot get latest position because status of device is: ".$data['status']);
+
 				$pos = GPSPosition::getLatestPosition();
 				$data = $pos->getRowData();
-				/*$data['latitude'] = ((float)rand() / (float)getrandmax())*360.0 - 180;
-				$data['longitude'] = ((float)rand() / (float)getrandmax())*180.0 - 90;
-				$data['bearing'] = ((float)rand() / (float)getrandmax())*360;
-				$data['speed_mps'] = ((float)rand() / (float)getrandmax())*50;
-				$data['updated'] = self::now();*/
 				break;
 		}
 		return $data;
 	}
 }
+?>
