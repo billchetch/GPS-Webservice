@@ -7,7 +7,7 @@ class GPSPosition extends \chetch\db\DBObject{
 		self::setConfig('TABLE_NAME', $t);
 
 		$tzo = self::tzoffset();
-		$sql = "SELECT *, CONCAT(timestamp,' ', '$tzo') AS updated FROM $t";
+		$sql = "SELECT id,latitude,longitude,hdop,vdop,pdop,bearing,speed,timestamp, CONCAT(timestamp,' ', '$tzo') AS updated FROM $t";
 		self::setConfig('SELECT_SQL', $sql);
 	}
 
@@ -28,7 +28,7 @@ class GPSPosition extends \chetch\db\DBObject{
 
 	static public function getLatestPosition($beforeID = null){
 		$filter = $beforeID ? "id < $beforeID" : null;
-		$rows = self::createCollection(null, $filter, "updated DESC", "0,1");
+		$rows = self::createCollection(null, $filter, "timestamp DESC", "0,1");
 		$latest = count($rows) ? $rows[0] : null;
 		return $latest;
 	}
