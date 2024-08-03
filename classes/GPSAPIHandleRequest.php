@@ -9,7 +9,7 @@ class GPSAPIHandleRequest extends chetch\api\APIHandleRequest{
 		$data = array();
 		switch($request){
 			case 'test':
-				$data = array('response'=>"GPS test Yeah baby");
+				$data = array('response'=>"GPS test Yeah baby2");
 				break;
 				
 			case 'status':
