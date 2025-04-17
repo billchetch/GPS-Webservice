@@ -26,8 +26,8 @@ class GPSAPIHandleRequest extends chetch\api\APIHandleRequest{
 
 			case 'latest-position':
 				$si = SysInfo::createInstance();
-				$data = $si->getData('gps_device_status');
-				if($data['status'] != "recording")throw new Exception("Cannot get latest position because status of GPS server device is: ".$data['status']);
+				$data = $si->getData('gps-device-status');
+				if(!$data['Connected'])throw new Exception("Cannot get latest position because device is not connected");
 
 				$pos = GPSPosition::getLatestPosition();
 				$data = $pos->getRowData();
