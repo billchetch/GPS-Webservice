@@ -1,4 +1,6 @@
 <?php
+//NOTE: rename as _config.php for local use
+
 use chetch\Config as Config;
 
 Config::initialise();
