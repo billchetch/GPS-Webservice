@@ -8,11 +8,16 @@ Config::initialise();
 Config::set('ERROR_REPORTING', E_ALL);
 
 //Database Config
-include('/var/www/conf/dbconfig.php');
-Config::set('DBHOST', 'mysql:host='._DB_HOST_);
+//include('../../conf/dbconfig.php');
+//Config::set('DBHOST', 'mysql:host='._DB_HOST_);
+Config::set('DBHOST', 'mysql:host=127.0.0.1');
+
 Config::set('DBNAME', 'gps');
-Config::set('DBUSERNAME', _DB_USERNAME_);
-Config::set('DBPASSWORD', _DB_PASSWORD_);
+Config::set('DBUSERNAME', 'root');
+Config::set('DBPASSWORD', 'chetch');
+
+//Config::set('DBUSERNAME', _DB_USERNAME_);
+//Config::set('DBPASSWORD', _DB_PASSWORD_);
 $dbtblpfx = ''; //table prefix for database
 
 //Email Config
